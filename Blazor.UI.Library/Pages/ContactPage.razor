@@ -1,0 +1,35 @@
+﻿@page "/contact"
+@inject IContact contactService
+
+
+<h3>Contact Page</h3>
+
+<button type="button" class="btn btn-primary mb-5" @onclick="AddNewContact">Aggiungi</button>
+
+<ContactsCard ContactList="contactList" />
+
+@code {
+    List<Contact> contactList = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var data = contactService.GetContacts();
+        if (data is not null)
+        {
+            contactList = data.ToList();
+        }
+    }
+
+    private void AddNewContact()
+    {
+        var contact = new Contact() {  Id = 4, Name = "Mario Verdi", City = "Roma"};
+        contactService.AddContact(contact);
+
+        var data = contactService.GetContacts();
+        if (data is not null)
+        {
+            contactList = data.ToList();
+        }
+    }
+}

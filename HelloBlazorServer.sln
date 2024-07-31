@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloBlazorServer", "HelloB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Library", "Blazor.Library\Blazor.Library.csproj", "{17183042-0363-42FF-BAA9-C1BFF8361ADC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloBlazorWebAssembly", "HelloBlazorWebAssembly\HelloBlazorWebAssembly.csproj", "{9705E6E7-9DE5-40B6-8ACD-5003085BE532}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloBlazorWebAssembly", "HelloBlazorWebAssembly\HelloBlazorWebAssembly.csproj", "{9705E6E7-9DE5-40B6-8ACD-5003085BE532}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.UI.Library", "Blazor.UI.Library\Blazor.UI.Library.csproj", "{A86FB826-277C-4161-BC68-0D5C038BADF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.UI.Library", "Blazor.UI.Library\Blazor.UI.Library.csproj", "{A86FB826-277C-4161-BC68-0D5C038BADF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

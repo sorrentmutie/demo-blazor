@@ -1,12 +1,17 @@
+using Blazor.Library.Contacts.Interfaces;
+using Blazor.Library.Contacts.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<IProducts, StaticProductsService>();
+builder.Services.AddScoped<IContact, ContactService>();
 
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
