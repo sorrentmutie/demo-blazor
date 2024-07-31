@@ -1,0 +1,9 @@
+﻿@HeaderChildContent
+<h3>My First Component</h3>
+@ChildContent
+
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? HeaderChildContent { get; set; }
+}

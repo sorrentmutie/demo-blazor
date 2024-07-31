@@ -1,0 +1,28 @@
+﻿@page "/offers"
+@using Blazor.UI.Library.Shared
+
+@inject IProducts productsService
+
+<ProductsListComponent Products="offerProducts" Title="Prodotti in offerta"
+    OnProductDeleted="ProductDeleted"/>
+
+
+@code {
+    private List<Product>? offerProducts;
+
+    protected override void OnInitialized()
+    {
+        var data = productsService.GetOfferProducts();
+        if (data is not null)
+        {
+            offerProducts = data.ToList();
+        }
+    }
+    private void ProductDeleted(Product product)
+    {
+        if (offerProducts is not null)
+        {
+            offerProducts.Remove(product);
+        }
+    }
+}

@@ -1,0 +1,47 @@
+﻿<h3>@Title</h3>
+
+@if(Products != null)
+{
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Product Id</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Image</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var product in Products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td><img src="@product.ImagePath"/></td>
+                    <td> <button @onclick="() => OnProductDeleted.InvokeAsync(product)" class="btn btn-primary">Cancella</button> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>Non ci sono prodotti</em></p>
+}
+
+@code {
+    [Parameter] public List<Product>? Products { get; set; }
+    [Parameter] public string Title { get; set; } = "Products List";
+    [Parameter] public EventCallback<Product> OnProductDeleted { get; set; }
+
+    // private void DeleteProduct(Product product)
+    // {
+    //     if (Products != null)
+    //     {
+    //         Products.Remove(product);
+    //     }
+    // }
+
+}

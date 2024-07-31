@@ -1,0 +1,29 @@
+﻿@page "/catalog"
+
+@inject IProducts productsService
+
+<ProductsListComponent Products="catalogProducts" Title="Catalogo prodotti"
+    OnProductDeleted="DeleteCatalogProduct"/>
+
+@code {
+    private List<Product>? catalogProducts;
+    protected override void OnInitialized()
+    {
+        var catalog = productsService.GetProducts();
+        if (catalog is not null)
+        {
+            catalogProducts = catalog.ToList();
+        };
+    }
+
+    private void DeleteCatalogProduct(Product product)
+    {
+        if (catalogProducts is not null)
+        {
+            if(product.Id % 2 == 0)
+            {
+                catalogProducts.Remove(product);
+            }
+        }
+    }
+}
