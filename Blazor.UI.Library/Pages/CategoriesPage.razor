@@ -1,0 +1,26 @@
+﻿@page "/categories"
+
+@inject ICategoriesData service
+
+@if(categories is not null)
+{
+    <CategoriesList Categories="categories"/>
+}
+else
+{
+    <p>There are no categories</p>
+}
+
+
+@code {
+    private List<CategoryDTO>? categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var data = await service.GetCategoriesAsync();
+        if(data is not null)
+        {
+            categories = data.ToList();
+        }
+    }
+}

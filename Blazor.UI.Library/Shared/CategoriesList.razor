@@ -1,0 +1,22 @@
+﻿<h3>Categories List</h3>
+
+
+@if(Categories is null)
+{
+    <p>There are no categories</p>
+}
+else
+{
+
+    @foreach (var category in Categories!)
+    {
+        <p>@category.Name    @category.Description</p>
+    }   
+}
+
+
+
+
+@code {
+ [Parameter] public List<CategoryDTO>? Categories { get; set; }  
+}
