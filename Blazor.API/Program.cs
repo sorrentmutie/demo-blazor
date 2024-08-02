@@ -1,6 +1,7 @@
 using Blazor.Data.Models;
 using Blazor.Library.Northwind.DTO;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -42,10 +43,11 @@ app.MapGet("/categories", async (NorthwindContext db) =>
     {
         Id = c.CategoryId,
         Name = c.CategoryName,
-        Description = c.Description
+        Description = c.Description,
+        NumberOfProducts = c.Products.Count(),
+        Products = c.Products.Select(p => new ProductDTO { Name = p.ProductName, Id = p.ProductId, IdFornitore = p.Supplier.SupplierId, NomeFornitore = p.Supplier.CompanyName })
     }).ToListAsync();
 });
 
 
 app.Run();
-

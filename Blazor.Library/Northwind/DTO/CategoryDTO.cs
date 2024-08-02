@@ -11,4 +11,8 @@ public class CategoryDTO
 
 
     public required string Description { get; set; }
+
+    public int NumberOfProducts { get; set; }
+
+    public IEnumerable<ProductDTO> Products { get; set; } = Enumerable.Empty<ProductDTO>();
 }

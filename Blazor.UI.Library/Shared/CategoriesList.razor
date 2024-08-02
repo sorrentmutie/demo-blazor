@@ -1,4 +1,5 @@
-﻿<h3>Categories List</h3>
+﻿
+<h3>Categories List</h3>
 
 
 @if(Categories is null)
@@ -10,8 +11,33 @@ else
 
     @foreach (var category in Categories!)
     {
-        <p>@category.Name    @category.Description</p>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">@category.Name</h5>
+                <p class="card-text">@category.Description.</p>
+                <div>
+                    @foreach (var p in category.Products)
+                    {
+                        if (p is not null)
+                        {
+                            <span class="badge rounded-pill bg-danger">@p.Name @p.IdFornitore @p.NomeFornitore</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        @* <p>@category.Name    @category.Description      @category.NumberOfProducts</p> *@
+       @*  @foreach(var p in category.Products)
+        {
+            if(p is not null)
+            {
+                <p>@p.Id    @p.Name</p>       
+            }
+        } *@
     }   
+
 }
 
 

@@ -31,7 +31,8 @@ public class NorthwindCategoriesData : ICategoriesData
         {
             Id = c.CategoryId,
             Name = c.CategoryName,
-            Description = c.Description
+            Description = c.Description,
+            Products = c.Products.Select(p => new ProductDTO { Name = p.ProductName, Id = p.ProductId, IdFornitore = p.Supplier.SupplierId, NomeFornitore = p.Supplier.CompanyName })
         });
         return await categories.ToListAsync();
     }
