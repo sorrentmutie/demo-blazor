@@ -17,12 +17,15 @@ public class NorthwindCategoriesData : ICategoriesData
 
     public async Task AddCategoryAsync(CategoryDTO category)
     {
-        await northwindContext.Categories.AddAsync(new Category
+        var newCat = new Category
         {
             CategoryName = category.Name,
             Description = category.Description
-        });
+        };
+
+        await northwindContext.Categories.AddAsync(newCat);
         await northwindContext.SaveChangesAsync();
+        northwindContext.Entry(newCat).State = EntityState.Detached;
     }
 
     public async Task DeleteCategoryAsync(CategoryDTO category)
@@ -30,6 +33,7 @@ public class NorthwindCategoriesData : ICategoriesData
         var categoryToRemove = new Category() { CategoryId = category.Id };
         northwindContext.Remove(categoryToRemove);
         await northwindContext.SaveChangesAsync();
+        northwindContext.Entry(categoryToRemove).State = EntityState.Detached;
     }
 
     public async Task<IEnumerable<CategoryDTO>?> GetCategoriesAsync()
@@ -62,6 +66,7 @@ public class NorthwindCategoriesData : ICategoriesData
             categoryDb.CategoryName = category.Name;
             categoryDb.Description = category.Description;
             await northwindContext.SaveChangesAsync();
+            northwindContext.Entry(categoryDb).State = EntityState.Detached;
         }
     }
 

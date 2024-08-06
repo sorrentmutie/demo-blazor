@@ -18,7 +18,13 @@
 
 } else
 {
-    <Details Category="category" OnCancel="Cancel" OnSave="Save" ></Details>
+    <Details TItem="CategoryDTO" Item="category" OnCancel="Cancel" OnSave="Save" Context="category" >
+        <ChildContent>
+
+            <MyInputText Id="name" Label="Nome" @bind-Value="category.Name"></MyInputText>
+            <MyInputText Id="description" Label="Description" @bind-Value="category.Description"></MyInputText>
+        </ChildContent>
+    </Details>
 }
 
 
