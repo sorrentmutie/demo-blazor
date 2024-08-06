@@ -15,7 +15,7 @@ else
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">@category.Name</h5>
-                <p class="card-text">@category.Description.</p>
+                <p class="card-text">@category.Description</p>
                 <div>
                     @foreach (var p in category.Products)
                     {
@@ -25,19 +25,12 @@ else
                         }
                     }
                 </div>
+                <button class="btn btn-warning mt-3" @onclick="() => OnEdit.InvokeAsync(category)">Edit</button>
+
             </div>
         </div>
 
-        @* <p>@category.Name    @category.Description      @category.NumberOfProducts</p> *@
-       @*  @foreach(var p in category.Products)
-        {
-            if(p is not null)
-            {
-                <p>@p.Id    @p.Name</p>       
-            }
-        } *@
     }   
-
 }
 
 
@@ -45,4 +38,5 @@ else
 
 @code {
  [Parameter] public List<CategoryDTO>? Categories { get; set; }  
+ [Parameter] public EventCallback<CategoryDTO> OnEdit { get; set; }
 }

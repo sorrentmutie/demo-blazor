@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.UI.Library", "Blazor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Data", "Blazor.Data\Blazor.Data.csproj", "{79F3F1B4-00C7-4544-9887-02B23DAF7BB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.API", "Blazor.API\Blazor.API.csproj", "{D820A67B-ED56-411A-B9FA-FCBFCA8FAA6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.API", "Blazor.API\Blazor.API.csproj", "{D820A67B-ED56-411A-B9FA-FCBFCA8FAA6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

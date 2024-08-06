@@ -2,25 +2,77 @@
 
 @inject ICategoriesData service
 
-@if(categories is not null)
+
+@if(category is null)
 {
-    <CategoriesList Categories="categories"/>
-}
-else
+    <button @onclick="() => AddCategory()" class="btn btn-info mb-3">Add a new Category</button>
+
+    @if (categories is not null)
+    {
+        <CategoriesList Categories="categories" OnEdit="EditCategory" />
+    }
+    else
+    {
+        <p>There are no categories</p>
+    }
+
+} else
 {
-    <p>There are no categories</p>
+    <Details Category="category" OnCancel="Cancel" OnSave="Save" ></Details>
 }
+
+
+
+
 
 
 @code {
     private List<CategoryDTO>? categories;
+    private CategoryDTO? category;
 
-    protected override async Task OnInitializedAsync()
+    private async Task Save(CategoryDTO newCategory)
+    {
+        if(newCategory.Id == 0)
+        {
+            await service.AddCategoryAsync(newCategory);
+        }
+        else
+        {
+            await service.UpdateCategoryAsync(newCategory);
+        }
+
+        category = null;
+        await LoadData();
+    }
+
+    private void Cancel()
+    {
+        category = null;
+    }
+
+    private void EditCategory(CategoryDTO editCategory)
+    {
+        this.category = editCategory;
+    }
+
+    private void AddCategory()
+    {
+        category = new CategoryDTO() { Name = "", Description  = ""};
+    }
+
+
+    private async Task LoadData()
     {
         var data = await service.GetCategoriesAsync();
-        if(data is not null)
+        if (data is not null)
         {
             categories = data.ToList();
         }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
     }
 }
