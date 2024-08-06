@@ -13,11 +13,36 @@ public class ContactService : IContact
 
     public void AddContact(Contact contact)
     {
+        if (contact.Id == 0)
+        {
+            contact.Id = ContactList.Max(x => x.Id) + 1;
+        }
+
         ContactList.Add(contact);
+    }
+
+    public void DeleteContact(int Id)
+    {
+        var c = ContactList.FirstOrDefault(x => x.Id == Id);
+
+        if(c is not null)
+        {
+            ContactList.Remove(c);
+        }
     }
 
     public IEnumerable<Contact>? GetContacts()
     {
         return ContactList;
+    }
+
+    public void UpdateContact(Contact contact)
+    {
+        var c = ContactList.FirstOrDefault(x => x.Id == contact.Id);
+        if(c is not null)
+        {
+            c.City = contact.City;
+            c.Name = contact.Name;
+        }
     }
 }

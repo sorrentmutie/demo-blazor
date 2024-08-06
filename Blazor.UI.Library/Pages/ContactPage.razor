@@ -6,10 +6,35 @@
 
 <button type="button" class="btn btn-primary mb-5" @onclick="AddNewContact">Aggiungi</button>
 
-<ContactsCard ContactList="contactList" />
+@if (contact is null)
+{
+    @if (contactList is not null)
+    {
+        <ContactsCard OnEdit="Edit" OnRemove="Remove" ContactList="contactList" />
+    }
+    else
+    {
+        <h3>Non ci sono contatti.</h3>
+    }
+}
+else
+{
+    <Details TItem="Contact" Item="contact" OnCancel="Cancel" OnSave="Save" Context="contact">
+        <ChildContent>
+            <MyInputNumber Id="id" Label="Id"   @bind-Value="contact.Id"></MyInputNumber>
+            <MyInputText Id="name" Label="Name" @bind-Value="contact.Name"></MyInputText>
+            <MyInputText Id="city" Label="City" @bind-Value="contact.City"></MyInputText>
+        </ChildContent>
+    </Details>
+}
+
+
+
 
 @code {
     List<Contact> contactList = new();
+    private Contact? contact;
+    private bool isNewContact = false;
 
     protected override void OnInitialized()
     {
@@ -23,9 +48,45 @@
 
     private void AddNewContact()
     {
-        var contact = new Contact() {  Id = 4, Name = "Mario Verdi", City = "Roma"};
-        contactService.AddContact(contact);
+        isNewContact = true;
+        contact = new Contact();
+    }
 
+    private void Save(Contact contactToSave)
+    {
+        if (!isNewContact)
+        {
+            contactService.UpdateContact(contactToSave);
+        }
+        else
+        {
+            contactService.AddContact(contactToSave);
+        }    
+
+        var data = contactService.GetContacts();
+        if (data is not null)
+        {
+            contactList = data.ToList();
+        }
+
+        contact = null;
+
+        isNewContact = false;
+    }
+
+    private void Cancel()
+    {
+        contact = null;
+    }
+
+    private void Edit(Contact contactToSave)
+    {
+        contact = contactToSave;
+    }
+
+    private void Remove(Contact contactToRemove)
+    {
+        contactService.DeleteContact(contactToRemove.Id);
         var data = contactService.GetContacts();
         if (data is not null)
         {

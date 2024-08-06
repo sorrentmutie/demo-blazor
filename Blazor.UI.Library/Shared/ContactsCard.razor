@@ -4,9 +4,11 @@
     {
         <div class="card" style="width: 18rem;">
             <div class="card-body">
+                <h3 class="card-title">@c.Id</h3>
                 <h5 class="card-title">@c.Name</h5>
                 <p class="card-text">@c.City</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <button class="btn btn-info" @onclick="() => OnEdit.InvokeAsync(c)">Edit</button>
+                <button class="btn btn-danger" @onclick="() => OnRemove.InvokeAsync(c)">Remove</button>
             </div>
         </div>
     }
@@ -17,4 +19,6 @@
 
 @code {
     [Parameter] public List<Contact>? ContactList { get; set; }
+    [Parameter] public EventCallback<Contact> OnEdit { get; set; }
+    [Parameter] public EventCallback<Contact> OnRemove { get; set; }
 }
