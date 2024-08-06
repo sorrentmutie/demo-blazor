@@ -8,4 +8,5 @@ public interface ICategoriesData
     Task<CategoryDTO?> GetCategoryAsync(int id);
     Task AddCategoryAsync(CategoryDTO category);
     Task UpdateCategoryAsync(CategoryDTO category);
+    Task DeleteCategoryAsync(CategoryDTO category);
 }

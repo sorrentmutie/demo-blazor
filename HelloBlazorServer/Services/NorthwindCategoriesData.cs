@@ -25,6 +25,13 @@ public class NorthwindCategoriesData : ICategoriesData
         await northwindContext.SaveChangesAsync();
     }
 
+    public async Task DeleteCategoryAsync(CategoryDTO category)
+    {
+        var categoryToRemove = new Category() { CategoryId = category.Id };
+        northwindContext.Remove(categoryToRemove);
+        await northwindContext.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<CategoryDTO>?> GetCategoriesAsync()
     {
         var categories = northwindContext.Categories.Select(c => new CategoryDTO
@@ -57,4 +64,5 @@ public class NorthwindCategoriesData : ICategoriesData
             await northwindContext.SaveChangesAsync();
         }
     }
+
 }

@@ -26,6 +26,7 @@ else
                     }
                 </div>
                 <button class="btn btn-warning mt-3" @onclick="() => OnEdit.InvokeAsync(category)">Edit</button>
+                <button class="btn btn-danger mt-3"  @onclick="() => OnDelete.InvokeAsync(category)">Delete</button>
 
             </div>
         </div>
@@ -37,6 +38,7 @@ else
 
 
 @code {
- [Parameter] public List<CategoryDTO>? Categories { get; set; }  
- [Parameter] public EventCallback<CategoryDTO> OnEdit { get; set; }
+    [Parameter] public List<CategoryDTO>? Categories { get; set; }  
+    [Parameter] public EventCallback<CategoryDTO> OnEdit { get; set; }
+    [Parameter] public EventCallback<CategoryDTO> OnDelete { get; set; }
 }

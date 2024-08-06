@@ -9,7 +9,7 @@
 
     @if (categories is not null)
     {
-        <CategoriesList Categories="categories" OnEdit="EditCategory" />
+        <CategoriesList Categories="categories" OnEdit="EditCategory" OnDelete="DeleteCategory"/>
     }
     else
     {
@@ -29,6 +29,12 @@
 @code {
     private List<CategoryDTO>? categories;
     private CategoryDTO? category;
+
+    private async Task DeleteCategory(CategoryDTO categoryToRemove)
+    {
+        await service.DeleteCategoryAsync(categoryToRemove);
+        await LoadData();
+    }
 
     private async Task Save(CategoryDTO newCategory)
     {

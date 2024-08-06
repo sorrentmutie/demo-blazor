@@ -19,6 +19,11 @@ public class CategoriesDataForWebAssembly : ICategoriesData
         throw new NotImplementedException();
     }
 
+    public Task DeleteCategoryAsync(CategoryDTO category)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IEnumerable<CategoryDTO>?> GetCategoriesAsync()
     {
        var responseMessage = await httpClient.GetAsync(url);
