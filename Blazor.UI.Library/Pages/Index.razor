@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@inject IJSRuntime jsRuntime    
+
 
 <PageTitle>Index</PageTitle>
 
@@ -17,3 +19,33 @@
         <p>Un altro paragrafo</p>
     </ChildContent>
 </MyFirstComponent>
+
+<button @onclick="() =>EseguiCalcolo()">Click me</button>
+@area
+
+@code {
+    private InteropMatematico? interopMatematico;
+    private double area = 0;
+    protected override void OnInitialized()
+    {
+        interopMatematico = new InteropMatematico(jsRuntime);
+    }
+
+    private async Task EseguiCalcolo()
+    {
+        if(interopMatematico is not null)
+        {
+             //area = await interopMatematico.CalcolaAreaCerchio(10);
+             // await interopMatematico.Somma(10, 20);
+             await interopMatematico.Saluta("Mario");
+        }
+        
+    }
+
+    [JSInvokable]
+    public static int Somma(int a, int b)
+    {
+        return a + b;
+    }
+
+}

@@ -12,6 +12,7 @@ namespace Blazor.UI.Library
     public class ExampleJsInterop : IAsyncDisposable
     {
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
+        
 
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
