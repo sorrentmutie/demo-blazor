@@ -1,3 +1,26 @@
-﻿<div class="my-component">
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime jsRuntime
+
+
+<div class="my-component">
     This component is defined in the <strong>Blazor.UI.Library</strong> library.
+    <button @onclick="() => DoSomething()">Click me</button>
 </div>
+
+@code {
+
+    private ExampleJsInterop? exampleInterop;
+
+    protected override void OnInitialized()
+    {
+        exampleInterop = new ExampleJsInterop(jsRuntime);
+    }
+
+    private async Task DoSomething()
+    {
+        if(exampleInterop is not null)
+        {
+            await exampleInterop.Prompt("Mario");
+        }
+    }
+}

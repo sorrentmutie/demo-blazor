@@ -1,4 +1,7 @@
 ﻿@page "/counter"
+@using Blazor.UI.Library.Interop
+@using Microsoft.JSInterop
+@inject IJSRuntime jsRuntime
 
 <PageTitle>Counter</PageTitle>
 
@@ -8,13 +11,30 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+@somma
+
+
 <Component1/>
+
+
 
 @code {
     private int currentCount = 0;
+    private int somma = 0;
+    private FirstCotrapInterop? firstCotrapInterop;
 
-    private void IncrementCount()
+    protected override void OnInitialized()
     {
+        firstCotrapInterop = new FirstCotrapInterop(jsRuntime);
+    }
+
+    private async Task IncrementCount()
+    {
+        if(firstCotrapInterop is not null)
+        {
+            somma = await firstCotrapInterop.Somma(1, 2);
+            await firstCotrapInterop.Saluta("Mario");
+        }
         currentCount++;
     }
 }
