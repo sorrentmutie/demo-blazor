@@ -20,7 +20,18 @@
     </ChildContent>
 </MyFirstComponent>
 
+<MyModal Id="myM" Title="La mia bellissima modale" OnSave="Save">
+    <ChildContent>
+        <p>Contenuto della modale</p>
+        <p>Seconda riga</p>
+    </ChildContent>
+
+</MyModal>
+
+
 <button @onclick="() =>EseguiCalcolo()">Click me</button>
+<button @onclick="() =>ShowModal()">Show Modal</button>
+
 @area
 
 @code {
@@ -29,6 +40,16 @@
     protected override void OnInitialized()
     {
         interopMatematico = new InteropMatematico(jsRuntime);
+    }
+
+    private async Task Save()
+    {
+        await jsRuntime.InvokeVoidAsync("nascondiModale");
+    }
+
+    private async Task ShowModal()
+    {
+        await jsRuntime.InvokeVoidAsync("mostraModale", "myM");
     }
 
     private async Task EseguiCalcolo()
