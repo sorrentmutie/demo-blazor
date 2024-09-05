@@ -1,0 +1,18 @@
+﻿@inject IJSRuntime jSRuntime
+<div id="map" style="height:@(Height)px"></div>
+
+@code {
+    [Parameter] public string? Height { get; set; } = "500";
+    [Parameter] public int Latitudine { get; set; }
+    [Parameter] public int Longitudine { get; set; }
+    [Parameter] public int Zoom { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await jSRuntime.InvokeVoidAsync("showMap", Latitudine, Longitudine, Zoom);
+    }
+
+
+
+
+}
