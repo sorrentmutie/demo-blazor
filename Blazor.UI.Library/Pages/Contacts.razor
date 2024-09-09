@@ -1,7 +1,14 @@
 ﻿@page "/contacts"
+@using Blazor.Library.Map
 @inject IJSRuntime jSRuntime
+@inject IMapParameters mapParametersService
 <h3>Contacts</h3>
-<Mappa Height="700" Latitudine="34" Longitudine="9" Zoom="10"/>
+@foreach (var mp in mapParametersService.GetParameters())
+{
+    <Mappa MapParameters="mp" />
+    <br/>
+}
+
 
 @code {
 

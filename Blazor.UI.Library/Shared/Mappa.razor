@@ -1,18 +1,29 @@
 ﻿@inject IJSRuntime jSRuntime
-<div id="map" style="height:@(Height)px"></div>
+
+@if(MapParameters is not null)
+{
+    <div id="@MapParameters.Id" style="height:@(MapParameters.Height)px"></div>
+}
+
 
 @code {
-    [Parameter] public string? Height { get; set; } = "500";
-    [Parameter] public int Latitudine { get; set; }
-    [Parameter] public int Longitudine { get; set; }
-    [Parameter] public int Zoom { get; set; }
+    [Parameter] public MapParameters? MapParameters { get; set;}
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await jSRuntime.InvokeVoidAsync("showMap", Latitudine, Longitudine, Zoom);
+        await jSRuntime.InvokeVoidAsync("showMap", 
+                                        MapParameters?.Id, 
+                                        MapParameters?.Coordinates.Latitude, 
+                                        MapParameters?.Coordinates.Longitude, 
+                                        MapParameters?.Zoom,
+                                        MapParameters?.Markers);
     }
 
-
+    [JSInvokable]
+    public static string GetInfo(int IdMarker)
+    {
+        return IdMarker % 2 == 0 ? "Open" : "Closed";
+    }
 
 
 }

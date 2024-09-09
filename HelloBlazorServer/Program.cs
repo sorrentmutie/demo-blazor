@@ -1,6 +1,7 @@
 using Blazor.Data.Models;
 using Blazor.Library.Contacts.Interfaces;
 using Blazor.Library.Contacts.Services;
+using Blazor.Library.Map;
 using Blazor.Library.Northwind;
 using HelloBlazorServer.Services;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<IProducts, StaticProductsService>();
 builder.Services.AddScoped<IContact, ContactService>();
 builder.Services.AddScoped<ICategoriesData, NorthwindCategoriesData>();
+builder.Services.AddScoped<IMapParameters, MapParametersService>();
 builder.Services.AddDbContext<NorthwindContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Northwind")));
 
