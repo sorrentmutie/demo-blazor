@@ -28,12 +28,23 @@ public class NorthwindCategoriesData : ICategoriesData
         northwindContext.Entry(newCat).State = EntityState.Detached;
     }
 
-    public async Task DeleteCategoryAsync(CategoryDTO category)
+    public async Task<bool> DeleteCategoryAsync(CategoryDTO category)
     {
         var categoryToRemove = new Category() { CategoryId = category.Id };
         northwindContext.Remove(categoryToRemove);
-        await northwindContext.SaveChangesAsync();
-        northwindContext.Entry(categoryToRemove).State = EntityState.Detached;
+        try
+        {
+            await northwindContext.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        finally
+        { 
+            northwindContext.Entry(categoryToRemove).State = EntityState.Detached;
+        }
     }
 
     public async Task<IEnumerable<CategoryDTO>?> GetCategoriesAsync()

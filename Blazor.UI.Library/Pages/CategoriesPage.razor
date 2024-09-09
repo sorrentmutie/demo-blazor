@@ -1,19 +1,21 @@
 ﻿@page "/categories"
-
+@inject IJSRuntime jsRuntime
 @inject ICategoriesData service
 
 
+<MySpinner IsVisible="showLoader"></MySpinner>
+<p>@message</p>
+
 @if(category is null)
 {
-    <button @onclick="() => AddCategory()" class="btn btn-info mb-3">Add a new Category</button>
-
     @if (categories is not null)
     {
+        <button @onclick="() => AddCategory()" class="btn btn-info mb-3">Add a new Category</button>
         <CategoriesList Categories="categories" OnEdit="EditCategory" OnDelete="DeleteCategory"/>
     }
     else
     {
-        <p>There are no categories</p>
+        <p>@categoriesMessage</p>
     }
 
 } else
@@ -27,6 +29,12 @@
     </Details>
 }
 
+<MyModal Id="myM" Title=@("Sicuro di cancellare " + selectedCategory?.Name + " ?") OnSave="SaveModal">
+    <ChildContent>
+        <p>@selectedCategory?.Name</p>
+        <p>@selectedCategory?.Description</p>
+    </ChildContent>
+</MyModal>
 
 
 
@@ -35,11 +43,30 @@
 @code {
     private List<CategoryDTO>? categories;
     private CategoryDTO? category;
+    private CategoryDTO? selectedCategory;
+    private string message = string.Empty;
+    private string categoriesMessage = string.Empty;
+    private bool showLoader = false;
+
+    private async Task SaveModal()
+    {
+        if (selectedCategory is not null)
+        {
+            var res = await service.DeleteCategoryAsync(selectedCategory);
+            await jsRuntime.InvokeVoidAsync("nascondiModale");
+            if(!res)
+            {
+                await jsRuntime.InvokeVoidAsync("showNotification");
+                message = "Non è possibile cancellare la categoria " + selectedCategory.Name;
+            }
+            await LoadData();
+        }
+    }
 
     private async Task DeleteCategory(CategoryDTO categoryToRemove)
     {
-        await service.DeleteCategoryAsync(categoryToRemove);
-        await LoadData();
+        selectedCategory = categoryToRemove;
+        await jsRuntime.InvokeVoidAsync("mostraModale", "myM");
     }
 
     private async Task Save(CategoryDTO newCategory)
@@ -75,12 +102,16 @@
 
     private async Task LoadData()
     {
+        showLoader = true;
         var data = await service.GetCategoriesAsync();
+
+        categoriesMessage = data?.Count() == 0 ? "Non ci sono categorie." : string.Empty;
+
         if (data is not null)
         {
             categories = data.ToList();
         }
-
+        showLoader = false;
     }
 
     protected override async Task OnInitializedAsync()

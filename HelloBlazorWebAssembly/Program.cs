@@ -8,6 +8,7 @@ using Blazor.Library.Contacts.Interfaces;
 using Blazor.Library.Contacts.Services;
 using Blazor.Library.Northwind;
 using HelloBlazorWebAssembly.Services;
+using Blazor.Library.Map;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -16,7 +17,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7265/") });
 builder.Services.AddScoped<IProducts, StaticProductsService>();
 builder.Services.AddScoped<IContact, ContactService>();
-
+builder.Services.AddScoped<IMapParameters, MapParametersWASM>();
 
 builder.Services.AddScoped<ICategoriesData, CategoriesDataForWebAssembly>();
 

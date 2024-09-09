@@ -19,7 +19,7 @@ public class CategoriesDataForWebAssembly : ICategoriesData
         throw new NotImplementedException();
     }
 
-    public Task DeleteCategoryAsync(CategoryDTO category)
+    public Task<bool> DeleteCategoryAsync(CategoryDTO category)
     {
         throw new NotImplementedException();
     }

@@ -2,15 +2,24 @@
 @using Blazor.Library.Map
 @inject IJSRuntime jSRuntime
 @inject IMapParameters mapParametersService
+
 <h3>Contacts</h3>
-@foreach (var mp in mapParametersService.GetParameters())
+@if (mapParameters is not null)
 {
-    <Mappa MapParameters="mp" />
-    <br/>
+    foreach (var mp in mapParameters)
+    {
+        <Mappa MapParameters="mp" />
+        <br />
+    }
 }
 
 
 @code {
+    private List<MapParameters>? mapParameters;
 
+    protected override async Task OnInitializedAsync()
+    {
+        mapParameters = await mapParametersService.GetParametersAsync();
+    }
 
 }

@@ -1,12 +1,21 @@
 ﻿@page "/catalog"
-
+@inject IJSRuntime jsRuntime
 @inject IProducts productsService
 
 <ProductsListComponent Products="catalogProducts" Title="Catalogo prodotti"
     OnProductDeleted="DeleteCatalogProduct"/>
 
+<MyModal Id="myM" Title="Sicuro di cancellare?" OnSave="Save">
+    <ChildContent>
+        <p>@selectedProduct?.Name</p>
+        <p>@selectedProduct?.Description</p>
+    </ChildContent>
+</MyModal>
+
 @code {
     private List<Product>? catalogProducts;
+    private Product? selectedProduct;
+
     protected override void OnInitialized()
     {
         var catalog = productsService.GetProducts();
@@ -16,14 +25,20 @@
         };
     }
 
-    private void DeleteCatalogProduct(Product product)
+    private async Task Save()
     {
-        if (catalogProducts is not null)
+        if (catalogProducts is not null && selectedProduct is not null)
         {
-            if(product.Id % 2 == 0)
-            {
-                catalogProducts.Remove(product);
-            }
+            catalogProducts.Remove(selectedProduct);
         }
+        await jsRuntime.InvokeVoidAsync("nascondiModale");
+    }
+
+    private async Task DeleteCatalogProduct(Product product)
+    {
+        selectedProduct = product;
+        await jsRuntime.InvokeVoidAsync("mostraModale", "myM");
+        
+        
     }
 }
