@@ -9,6 +9,7 @@ using Blazor.Library.Contacts.Services;
 using Blazor.Library.Northwind;
 using HelloBlazorWebAssembly.Services;
 using Blazor.Library.Map;
+using Blazor.Library.Charts.Interfaces;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IContact, ContactService>();
 builder.Services.AddScoped<IMapParameters, MapParametersWASM>();
 
 builder.Services.AddScoped<ICategoriesData, CategoriesDataForWebAssembly>();
+builder.Services.AddScoped<IDataChart, ChartServiceWasm>();
 
 
 

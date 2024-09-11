@@ -1,0 +1,104 @@
+﻿@page "/grafico"
+@using Blazor.Library.Charts.Interfaces
+
+@inject IDataChart chartData
+<h3>Grafico</h3>
+
+@foreach (var d in @data)
+{
+    <MyChart IdChart="@d.Id" Type="ChartType.Line" Data="@d"></MyChart>
+}
+
+
+<button @onclick="AddData">Aggiungi</button>
+
+@* <MyChart IdChart="chart1" Type="ChartType.Line" Data="@data"></MyChart>
+
+<br />
+
+<MyChart IdChart="chart2" Type="ChartType.Bar" Data="@data"></MyChart>
+
+<br />
+
+<MyChart IdChart="chart3" Type="ChartType.Pie" Data="@data"></MyChart>
+ *@
+
+
+
+@code {
+    private string? currentTime;
+    private System.Timers.Timer timer;
+    private int counter = 0;
+
+
+
+    private void UpdateTime(object sender, System.Timers.ElapsedEventArgs e)
+    {
+        // Aggiorna l'ora corrente e forza il refresh del componente
+        counter++;
+        AddPoint();
+        //AddData();
+        InvokeAsync(StateHasChanged); // Richiama l'aggiornamento dell'interfaccia
+    }
+
+    public void Dispose()
+    {
+        // Assicurati di fermare il timer e rilasciare le risorse quando il componente viene eliminato
+        timer.Dispose();
+    }
+    // private static string[] labels = new[] { "Gen", "Feb", "Mar", "Apr", "Mag", "Giu" };
+    // private static double[] prezzoOro = new double[] { 34, 38, 41, 29, 32, 36 };
+    // private static double[] prezzoPetrolio = new double[] { 27, 22, 23, 23, 24, 25 };
+
+    // private ChartData data = new ChartData
+    //     {
+    //         Labels = new List<string> { "Mon", "Tue", "Wed", "Thu", "Fri" },
+    //         Series = new List<List<int>>
+    //         {
+    //             new List<int> { 1, 1, 1, 1, 0 },
+    //             new List<int> { 11, 21, 31, 41, 50 }
+    //         }
+    //     };
+    private Random random = new Random();
+    List<ChartData>? data = new List<ChartData>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        data = await chartData.GetDataAsync();
+
+        // Inizializza il timer .NET che scatta ogni secondo
+        timer = new System.Timers.Timer(10000);
+        timer.Elapsed += UpdateTime!;
+        timer.Start();
+    }
+
+    private void AddData()
+    {
+        if(data is not null)
+        {
+            var x = data.FirstOrDefault();
+            if(x is not null)
+            {
+                x.Series.Add(new List<int> { 100, 200, 100, 200, 100 });
+            }
+        }
+    }
+
+    private void AddPoint()
+    {
+        if (data is not null)
+        {
+            var x = data.FirstOrDefault();
+            if (x is not null)
+            {
+                var y = x.Series.FirstOrDefault();
+
+                if(y is not null)
+                {
+                    y.Add(counter);
+                }
+            }
+        }
+    }
+
+}

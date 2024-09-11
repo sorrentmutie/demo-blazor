@@ -1,0 +1,63 @@
+﻿@inject IJSRuntime jSRuntime
+<div id="@IdChart"></div>
+
+
+
+@code {
+    [Parameter] public string IdChart { get; set; } = string.Empty;
+    [Parameter] public ChartType Type { get; set; }
+    [Parameter] public ChartData Data { get; set; } = new();
+
+    private DataPie MyDataForPie = new DataPie { Series = new List<int> { 1, 2, 3, 4, 5 } };
+
+    private MyChartInterop? myChartInterop;
+
+    protected override void OnInitialized()
+    {
+        myChartInterop = new MyChartInterop(jSRuntime);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (myChartInterop is not null)
+            {
+                switch (Type)
+                {
+                    case ChartType.Line:
+                        await myChartInterop.ShowChartLine(IdChart, Data);
+                        break;
+                    case ChartType.Bar:
+                        await myChartInterop.ShowChartBar(IdChart, Data);
+                        break;
+                    case ChartType.Pie:
+                        await myChartInterop.ShowChartPie(IdChart, MyDataForPie);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else
+        {
+            if (myChartInterop is not null)
+            {
+                switch (Type)
+                {
+                    case ChartType.Line:
+                        await myChartInterop.ShowChartLine(IdChart, Data);
+                        break;
+                    case ChartType.Bar:
+                        await myChartInterop.ShowChartBar(IdChart, Data);
+                        break;
+                    case ChartType.Pie:
+                        await myChartInterop.ShowChartPie(IdChart, MyDataForPie);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+}

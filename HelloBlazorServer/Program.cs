@@ -1,4 +1,5 @@
 using Blazor.Data.Models;
+using Blazor.Library.Charts.Interfaces;
 using Blazor.Library.Contacts.Interfaces;
 using Blazor.Library.Contacts.Services;
 using Blazor.Library.Map;
@@ -17,6 +18,7 @@ builder.Services.AddScoped<ICategoriesData, NorthwindCategoriesData>();
 builder.Services.AddScoped<IMapParameters, MapParametersService>();
 builder.Services.AddDbContext<NorthwindContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Northwind")));
+builder.Services.AddScoped<IDataChart, ChartService>();
 
 
 var app = builder.Build();

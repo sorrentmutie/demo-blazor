@@ -1,6 +1,7 @@
 using Blazor.Data.Models;
 using Blazor.Library.Map;
 using Blazor.Library.Northwind.DTO;
+using Blazor.UI.Library.Interop;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 
@@ -69,5 +70,48 @@ app.MapGet("/mapparameters", () =>
     return parameters;
 });
 
+
+app.MapGet("/charts", () =>
+{
+    List<ChartData> dataList = new List<ChartData>();
+
+    ChartData data = new ChartData
+    {
+        Id = "chart1",
+        Labels = new List<string> { "Mon", "Tue", "Wed", "Thu", "Fri" },
+        Series = new List<List<int>>
+            {
+                new List<int> { 1, 1, 1, 1, 0 },
+                new List<int> { 11, 21, 31, 41, 50 }
+            }
+    };
+
+    ChartData data2 = new ChartData
+    {
+        Id = "chart2",
+        Labels = new List<string> { "Mon", "Tue", "Wed", "Thu", "Fri" },
+        Series = new List<List<int>>
+            {
+                new List<int> { 31, 31,31, 31, 30 },
+                new List<int> { 11, 21, 31, 41, 50 }
+            }
+    };
+
+    ChartData data3 = new ChartData
+    {
+        Id = "chart3",
+        Labels = new List<string> { "Mon", "Tue", "Wed", "Thu", "Fri" },
+        Series = new List<List<int>>
+            {
+                new List<int> { 8, 8, 8 }
+            }
+    };
+
+    dataList.Add(data);
+    //dataList.Add(data2);
+    //dataList.Add(data3);
+
+    return dataList;
+});
 
 app.Run();
